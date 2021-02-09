@@ -47,3 +47,33 @@ class Solution {
         return -1;
     }
 }
+//optimized code
+static int circulerSearch(int[] arr,int target){
+    int low = 0;
+    int high = arr.length-1;
+    while(start <= end){
+        int mid = start + (end - start) / 2;
+        
+        //case 1
+        if(arr[mid] == target){
+            return mid;
+        }
+        
+        //case 2 
+        if(arr[mid] <= arr[end]){
+            if(x >= arr[mid] && x < arr[end]) {
+                start = mid + 1;    
+            } else {
+                end = mid - 1;
+            }    
+        }
+        else{ // case 3
+            if(x < arr[mid] && x >= arr[low]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+    }
+    return -1;
+}
