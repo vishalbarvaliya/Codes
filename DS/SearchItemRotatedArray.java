@@ -48,29 +48,29 @@ class Solution {
     }
 }
 //optimized code
-static int circulerSearch(int[] arr,int target){
-    int low = 0;
-    int high = arr.length-1;
+static int circulerSearch(int[] arr,int x){
+    int start = 0;
+    int end = arr.length-1;
     while(start <= end){
         int mid = start + (end - start) / 2;
         
         //case 1
-        if(arr[mid] == target){
+        if(arr[mid] == x){
             return mid;
         }
         
         //case 2 
-        if(arr[mid] <= arr[end]){
-            if(x >= arr[mid] && x < arr[end]) {
+        if(arr[mid] <= arr[end]){   //right half is sorted..
+            if(x > arr[mid] && x <= arr[end]) { //go search in right sorted half
                 start = mid + 1;    
-            } else {
+            } else {          //go left
                 end = mid - 1;
             }    
         }
-        else{ // case 3
-            if(x < arr[mid] && x >= arr[low]) {
+        else{ // case 3 : left half is sorted
+            if(x < arr[mid] && x >= arr[start]) {   // go left sorted half
                 end = mid - 1;
-            } else {
+            } else {            // go right
                 start = mid + 1;
             }
         }
