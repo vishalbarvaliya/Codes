@@ -14,17 +14,8 @@ class Runner {
         list.insert(20);
         list.insert(30);
         list.insert(40);
-        //list.insert(50);
-        //list.insert(60);
-        //list.insert(70);
-        //list.insertAt(0,10);
-        //list.insertAt(5,60);
-        // list.insertAt(9,100);
-        //list.delete();
-        //list.deleteAt(4);
-        //list.deleteAt(3);
-        //list.deleteAt(6);
-        list.reverseList();
+        list.remove();     
+        //list.reverseList();
         list.show();
 
         System.out.println("");
@@ -86,12 +77,33 @@ class LinkedList {
         }
     }
 
-    public void delete() {
-        head = head.next;
-        tail.next = head;
+    public void removeFirst() {
+        if(head == null) {
+            System.out.println("List si empty..");
+        } else {
+            head = head.next;
+            tail.next = head;
+        }
+    }
+    
+     public void removeLast() {
+        if(head == null) {
+            System.out.println("List is empty..");
+        }else {
+            
+            Node tempnode = head;
+            
+            for(int i = 1; i < size() - 1; i++){
+                tempnode = tempnode.next;
+            }
+            
+            tempnode.next = head;
+            tail = tempnode;
+            tail.next = head;            
+        }
     }
 
-    public void deleteAt(int index) {
+    public void removeAt(int index) {
         if (head == null) {
             System.out.println("List is empty..");
             return;
@@ -101,7 +113,7 @@ class LinkedList {
             return;
         }
         if (index == 0) {
-            delete();
+            removeFirst();
             return;
         }
         Node tempnode = head;
@@ -109,9 +121,7 @@ class LinkedList {
             tempnode = tempnode.next;
         }
         if (index == size() - 1) {
-            tempnode.next = head;
-            tail = tempnode;
-            tail.next = head;
+            removeLast();
             return;
         }
         tempnode.next = (tempnode.next).next;
