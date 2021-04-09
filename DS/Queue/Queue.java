@@ -61,7 +61,7 @@ class Queue {
     public boolean isFull() {
         return rear == queue.length - 1;
     }
-    
+   
     public boolean isEmpty() {
         return rear == -1 && front == -1;
     }
