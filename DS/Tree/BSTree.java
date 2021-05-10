@@ -15,6 +15,19 @@ class BSTree {
     TNode root;
     
     public static void main (String[] args) {
+        /*
+        ~AVAILABLE BINARY SEARCH TREE OPERATIONS~
+        *add()
+        *contains()
+        *remove()
+        *inOrderTraversal(root)
+        *preOrderTraversal(root)
+        *postOrderTraversal(root)
+        *levelOrderTraversal(root)
+        *min()
+        *max()
+        *height()
+        */
         BSTree tree = new BSTree();
         tree.add(6);
         tree.add(4);
@@ -32,7 +45,7 @@ class BSTree {
         root = addRecursive(root, data);
     }
     
-    public boolean containsTNode(int data) {
+    public boolean contains(int data) {
         return searchRecursive(root, data);
     }
     
@@ -79,6 +92,20 @@ class BSTree {
         }
     }
     
+    public int height() {
+        return findHeight(root);
+    }
+    
+    public int min() {
+        TNode temp = smallestTNode(root);
+        return temp.data;
+    }
+    
+    public int max() {
+        TNode temp = biggestTNode(root);
+        return temp.data;
+    }
+    
     private TNode addRecursive(TNode current, int data) {
         if (current == null) {
             return new TNode(data);
@@ -116,6 +143,13 @@ class BSTree {
             return smallestTNode(temp.left);
     }
     
+    private TNode biggestTNode(TNode temp) {
+        if(temp.right == null)
+            return temp;
+        else 
+            return smallestTNode(temp.right);
+    }
+    
     private TNode deleleTNode(TNode current, int data) {
         if(current == null)
             return null;
@@ -140,4 +174,15 @@ class BSTree {
         }
         return current;
     }    
+    
+    private int findHeight(TNode current) {
+        if(current == null) {
+            return - 1;
+        }
+        else {
+            int leftHeight = findHeight(current.left);
+            int rihgtHeight = findHeight(current.right);
+            return Math.max(leftHeight, rihgtHeight) + 1;
+        }
+    }
 }
