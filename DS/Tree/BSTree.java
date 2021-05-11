@@ -186,8 +186,8 @@ class BSTree {
         }
         else {
             int leftHeight = findHeight(current.left);
-            int rihgtHeight = findHeight(current.right);
-            return Math.max(leftHeight, rihgtHeight) + 1;
+            int rightHeight = findHeight(current.right);
+            return Math.max(leftHeight, rightHeight) + 1;
         }
     }
     
