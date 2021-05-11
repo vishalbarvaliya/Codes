@@ -27,6 +27,7 @@ class BSTree {
         *min()
         *max()
         *height()
+        *isBST()
         */
         BSTree tree = new BSTree();
         tree.add(6);
@@ -104,6 +105,10 @@ class BSTree {
     public int max() {
         TNode temp = biggestTNode(root);
         return temp.data;
+    }
+    
+    public boolean isBST() {
+        return isBSTUtil(root, Integer.MIN_VALUE, Inetger.MAX_VALUE);    
     }
     
     private TNode addRecursive(TNode current, int data) {
@@ -184,5 +189,14 @@ class BSTree {
             int rihgtHeight = findHeight(current.right);
             return Math.max(leftHeight, rihgtHeight) + 1;
         }
+    }
+    
+    private boolean isBSTUtil(TNode current, int minValue, int maxValue) {
+        if(current == null)
+            return true;
+        if(current.data < minValue || current.data > maxValue)
+            return false;
+        return ( isBSTUtil(current.left, minValue, current.data - 1)
+                && isBSTUtil(current.right, current.data + 1, maxValue));
     }
 }
