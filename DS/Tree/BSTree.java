@@ -161,7 +161,7 @@ class BSTree {
         if (data < current.data)
             current.left = deleleTNode(current.left, data);
         else if(data > current.data) 
-            current.left = deleleTNode(current.right, data);
+            current.right = deleleTNode(current.right, data);
         else {
             
             if(current.left != null && current.right != null) {
