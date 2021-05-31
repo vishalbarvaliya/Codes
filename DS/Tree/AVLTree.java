@@ -112,7 +112,7 @@ public class AVLTree {
             if(node.left == null)
                 return node.right;
             else if(node.right == null)
-                return node.right;
+                return node.left;
             
             node.data = smallestNode(node.right);
             node.right = remove(node.right, node.data);
@@ -143,15 +143,12 @@ public class AVLTree {
         return node;
     }
     
-    private int smallestNode(TreeNode node) {
-        if(node == null)
-            return 0;
-        int data = 0;
-        while(node.left != null){
-            data = node.left.data;
-            node = node.left;
-        }
-        return data;
+    private TreeNode smallestNode(TreeNode node) {
+        TreeNode curr = node;
+        
+        while(curr.left != null)
+            curr = curr.left;
+        return curr;
     }
     
     private void display(TreeNode node, int space) {
