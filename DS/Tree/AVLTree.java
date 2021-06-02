@@ -23,43 +23,35 @@ public class AVLTree {
     }
     
     private TreeNode insertRec(TreeNode node, int data) {
-        if(node == null){
-            return new TreeNode(data);
-        }
-        
-        if(data < node.data) {
-            node.left = insertRec(node.left, data);
-        }
-        else if(data > node.data) {
+        if(node == null)
+            return new TreeNode(data);             
+        if(data < node.data) 
+            node.left = insertRec(node.left, data);        
+        else if(data > node.data) 
             node.right = insertRec(node.right, data);
-        }
+        else
+            return node;
         
         node.height = Math.max(height(node.left), height(node.right)) + 1;
         
-        int bf = balanceFactor(node);
+        int balance = balanceFactor(node);
         
-        //LL case
-        if(bf > 1 && data < node.left.data){
-            return rightRotate(node);
+        if (balance > 1) {
+            if (data < node.left.data) {
+                return rightRotate(node);
+            } else if (data > node.left.data) {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
         }
-        
-        //RR case
-        if(bf < -1 && data > node.right.data) {
-            return leftRotate(node);
+        if (balance < -1) {
+            if (data > node.right.data) {
+                return leftRotate(node);
+            } else if (data < node.right.data) {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
         }
-        
-        //LR case
-        if(bf > 1 && data > node.left.data){
-            node.left = leftRotate(node.left);
-            return rightRotate(node);           
-        }
-        
-        //RL case
-        if(bf < -1 && data < node.right.data){
-            node.right = rightRotate(node.right);
-            return leftRotate(node);
-        }       
-        
         return node;
     }
     
@@ -86,7 +78,7 @@ public class AVLTree {
         x.right = node;
         node.left = y;
         
-        //Hight update
+        //Height update
         node.height = Math.max(height(node.left), height(node.right)) + 1;
         x.height = Math.max(height(x.left), height(x.right)) + 1;        
         
@@ -109,13 +101,31 @@ public class AVLTree {
         else if(data > node.data)
             node.right = remove(node.right, data);
         else {
-            if(node.left == null)
-                return node.right;
-            else if(node.right == null)
-                return node.left;
-            
-            node.data = smallestNode(node.right);
-            node.right = remove(node.right, node.data);
+             if ((node.left == null) || (node.right == null)) { 
+                TreeNode temp = null; 
+                if (temp == node.left) 
+                    temp = node.right; 
+                else
+                    temp = node.left;   
+                // No child case 
+                if (temp == null) { 
+                    temp = node; 
+                    node = null; 
+                } 
+                else 
+                    node = temp;
+            } 
+            else{   
+                // node with two children: Get the inorder 
+                // successor (smallest in the right subtree) 
+                TreeNode temp = smallestNode(node.right);   
+                // Copy the inorder successor's data to this node 
+                node.data = temp.data; 
+                // Delete the inorder successor 
+                node.right = remove(node.right, temp.data); 
+            } 
+            if(node == null)
+                return node;
         }
         
                 
@@ -124,21 +134,21 @@ public class AVLTree {
         
         int balance = balanceFactor(node);
         
-        //LL case
-        if(balance > 1 && balanceFactor(node.left) >= 0)
-            return rightRotate(node);
-        //RR case
-        if(balance < -1 && balanceFactor(node.right) <= 0)
-            return leftRotate(node);
-        //LR case
-        if(balance > 1 && balanceFactor(node.left) < 0){
-            node.left = leftRotate(node.left);
-            return rightRotate(node);
+        if(balance > 1) {
+            if(balanceFactor(node.left) >= 0)
+                return rightRotate(node);
+            else{
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
         }
-        //RL case
-        if(balance < -1 && balanceFactor(node.left) > 0){
-            node.right = rightRotate(node.right);
-            return leftRotate(node);
+        if(balance < -1){
+            if(balanceFactor(node.right) <= 0)
+                return leftRotate(node);
+            else{
+                node.right = rightRotate(node.right);
+                return leftRotate(node);    
+            }
         }        
         return node;
     }
