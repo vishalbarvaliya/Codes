@@ -45,6 +45,7 @@ class LinkedList {
         }
     }
     
+    //Expect NullPointerException if list is empty
     public void insertBegin(int data) {
         Node newnode = new Node();
         newnode.data = data;
